@@ -1,0 +1,206 @@
+package ru.zero.ui.gui.component.render;
+
+import java.awt.Color;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.util.math.MatrixStack;
+import org.joml.Vector4f;
+import ru.zero.module.api.Category;
+import ru.zero.ui.gui.GuiScreen;
+import ru.zero.ui.gui.theme.MinecraftTheme;
+import ru.zero.util.color.ColorUtil;
+import ru.zero.util.render.animation.util.Easings;
+import ru.zero.util.render.backends.gl.StencilHelper;
+import ru.zero.util.render.core.Renderer2D;
+import ru.zero.util.render.text.FontRegistry;
+import ru.zero.util.render.texture.DiscordAvatarTexture;
+
+@Environment(EnvType.CLIENT)
+public class GuiRenderLeftPanel extends GuiScreen {
+   private static final float CATEGORY_ICON_X = 9.145F;
+   private static final float CATEGORY_ICON_Y_OFFSET = 50.185F;
+   private static final float CATEGORY_ICON_BASELINE_OFFSET = 8.0F;
+   private static final float CATEGORY_ICON_SIZE = 16.0F;
+
+    public static void renderLeftPanel(Renderer2D renderer2D, MatrixStack pose, float mainAlpha) {
+       if (mainAlpha <= 0.001F) {
+          return;
+       }
+
+        boolean vanillaStyle = GuiScreen.isVanillaStyle();
+        int outlineColor = vanillaStyle
+            ? Renderer2D.ColorUtil.replAlpha(MinecraftTheme.OUTLINE, 255)
+            : Renderer2D.ColorUtil.replAlpha(Renderer2D.ColorUtil.getOutLineColor(1, 1), (int)(20.4F * mainAlpha));
+        int backGroundTwoColor = vanillaStyle
+            ? Renderer2D.ColorUtil.replAlpha(MinecraftTheme.PANEL, (int)(235.0F * mainAlpha))
+            : Renderer2D.ColorUtil.replAlpha(Renderer2D.ColorUtil.getBackGroundTwoColor(1, 1), (int)(178.5F * mainAlpha));
+        int backGroundThreeColor = vanillaStyle
+            ? Renderer2D.ColorUtil.replAlpha(MinecraftTheme.PANEL_LIGHT, (int)(235.0F * mainAlpha))
+            : Renderer2D.ColorUtil.replAlpha(Renderer2D.ColorUtil.getMainColor(1, 1), (int)(10.2F * mainAlpha));
+        int mainColor = vanillaStyle
+            ? Renderer2D.ColorUtil.replAlpha(MinecraftTheme.GOLD, (int)(255.0F * mainAlpha))
+            : Renderer2D.ColorUtil.replAlpha(Renderer2D.ColorUtil.getMainColor(1, 1), (int)(255.0F * mainAlpha));
+        int mainColor40 = vanillaStyle
+            ? Renderer2D.ColorUtil.replAlpha(MinecraftTheme.GOLD, (int)(102.0F * mainAlpha))
+            : Renderer2D.ColorUtil.replAlpha(Renderer2D.ColorUtil.getMainColor(1, 1), (int)(102.0F * mainAlpha));
+        int textColor = vanillaStyle
+            ? Renderer2D.ColorUtil.replAlpha(MinecraftTheme.TEXT, (int)(255.0F * mainAlpha))
+            : Renderer2D.ColorUtil.replAlpha(Renderer2D.ColorUtil.getTextColor(1, 1), (int)(255.0F * mainAlpha));
+        int textTwoColor40 = vanillaStyle
+            ? Renderer2D.ColorUtil.replAlpha(MinecraftTheme.DISABLED, (int)(200.0F * mainAlpha))
+            : Renderer2D.ColorUtil.replAlpha(Renderer2D.ColorUtil.getTextTwoColor(1, 1), (int)(102.0F * mainAlpha));
+        Color mainColorGlow = Renderer2D.ColorUtil.getColor(Renderer2D.ColorUtil.replAlpha(vanillaStyle ? MinecraftTheme.GOLD : Renderer2D.ColorUtil.getMainColor(1, 1), (int)(35.0F * mainAlpha)));
+        Color mainColorGlow35 = Renderer2D.ColorUtil.getColor(Renderer2D.ColorUtil.replAlpha(vanillaStyle ? MinecraftTheme.GOLD : Renderer2D.ColorUtil.getMainColor(1, 1), (int)(56.0F * mainAlpha)));
+        Color koronaColors = Renderer2D.ColorUtil.getColor(Renderer2D.ColorUtil.replAlpha(vanillaStyle ? MinecraftTheme.GOLD : Color.ORANGE.getRGB(), (int)(50.0F * mainAlpha)));
+
+        float radius = vanillaStyle ? 0.0F : 6.5F;
+        float radiusUser = vanillaStyle ? 0.0F : 15.0F;
+        
+       renderer2D.flush();
+       StencilHelper.initStencil();
+       RenderUtil.drawRoundedCorner(renderer2D, GuiScreen.x, GuiScreen.y + 33.7F, 104.34F, 209.105F, new Vector4f(0.0F, 0.0F, 0.0F, 0.0F), -1);
+       renderer2D.flush();
+       StencilHelper.bindReadStencilBuffer(1);
+        if (ru.zero.util.render.glass.LiquidGlassRenderer.isEnabled()) {
+           ru.zero.util.render.glass.LiquidGlassRenderer.drawGlassPanel(renderer2D, GuiScreen.x, GuiScreen.y + 33.7F - 4.0F, 107.34F, 209.105F, radius, outlineColor, backGroundTwoColor);
+        } else {
+            renderer2D.rectOutline(GuiScreen.x, GuiScreen.y + 33.7F - 4.0F, 107.34F, 209.105F, radius, outlineColor, vanillaStyle ? 1.0F : 0.5F);
+           renderer2D.rect(GuiScreen.x, GuiScreen.y + 33.7F - 4.0F, 107.34F, 209.105F, radius, backGroundTwoColor);
+        }
+      renderer2D.flush();
+      StencilHelper.uninitStencilBuffer();
+      float downY = 0.0F;
+
+       for (Category category : GuiScreen.categories) {
+          float yicons = 0.0F;
+          category.anim33.update();
+          category.anim33.run(category == selectedCategories ? 1.0 : 0.0, 1.0, Easings.QUART_OUT);
+          renderer2D.rect(GuiScreen.x, GuiScreen.y + 43.365F + 0.5F + downY, 104.34F, 0.5F, ColorUtil.overCol(0, outlineColor, category.anim33.get()));
+          renderer2D.rect(GuiScreen.x, GuiScreen.y + 43.365F + downY, 104.34F, 21.325F, ColorUtil.overCol(0, backGroundThreeColor, category.anim33.get()));
+          renderer2D.rect(GuiScreen.x, GuiScreen.y + 43.365F + 21.325F + downY, 104.34F, 0.5F, ColorUtil.overCol(0, outlineColor, category.anim33.get()));
+          renderer2D.rect(GuiScreen.x, GuiScreen.y + 43.365F + downY, 1.0F, 21.825F, ColorUtil.overCol(0, mainColor, category.anim33.get()));
+           renderer2D.shadow(
+              GuiScreen.x, GuiScreen.y + 43.365F + downY, 1.0F, 21.825F, 0.0F, 1.0F, 0.1F, ColorUtil.overCol(0, mainColorGlow.getRGB(), category.anim33.get())
+           );
+            if (vanillaStyle) {
+               MinecraftTheme.drawIcon(
+                  renderer2D,
+                  categoryIcon(category),
+                  GuiScreen.x + CATEGORY_ICON_X,
+                  GuiScreen.y + CATEGORY_ICON_Y_OFFSET + yicons + downY + CATEGORY_ICON_BASELINE_OFFSET,
+                  CATEGORY_ICON_SIZE,
+                  mainColor
+               );
+            } else {
+               renderer2D.text(
+                  FontRegistry.ICONS,
+                  GuiScreen.x + CATEGORY_ICON_X,
+                  GuiScreen.y + CATEGORY_ICON_Y_OFFSET + yicons + downY + CATEGORY_ICON_BASELINE_OFFSET,
+                  CATEGORY_ICON_SIZE,
+                  category.getIcon(),
+                  mainColor
+               );
+            }
+           renderer2D.shadow(
+              GuiScreen.x + CATEGORY_ICON_X + 3.5F,
+              GuiScreen.y + CATEGORY_ICON_Y_OFFSET + downY + yicons + 3.5F,
+              0.1F,
+              0.1F,
+              8.0F,
+              5.7F,
+              0.1F,
+              ColorUtil.overCol(0, mainColorGlow35.getRGB(), category.anim33.get())
+           );
+           renderer2D.text(
+              FontRegistry.INTER_MEDIUM,
+              GuiScreen.x + 21.995F,
+              GuiScreen.y + 49.77F + downY + 7.0F + 0.2F,
+              14.0F,
+              category.getName(),
+              textColor
+           );
+          downY += 24.0F;
+       }
+
+         float avatarX = GuiScreen.x + 9.145F;
+         float avatarY = GuiScreen.y + 210.72F + 1.0F;
+         float avatarSize = 19.27F;
+         int discordAvatar = DiscordAvatarTexture.getTextureId();
+         if (vanillaStyle) {
+            renderer2D.rect(avatarX, avatarY, avatarSize, avatarSize, 0.0F, Renderer2D.ColorUtil.replAlpha(MinecraftTheme.OUTLINE, 255));
+            if (discordAvatar > 0) {
+               renderer2D.drawRgbaTextureWithUVRounded(discordAvatar, avatarX + 1.0F, avatarY + 1.0F, avatarSize - 2.0F, avatarSize - 2.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.0F);
+            } else {
+               MinecraftTheme.drawAvatar(renderer2D, avatarX + 1.0F, avatarY + 1.0F, avatarSize - 2.0F);
+            }
+         } else {
+            float avatarCenterX = avatarX + avatarSize * 0.5F;
+            float avatarCenterY = avatarY + avatarSize * 0.5F;
+            int avatarBackground = Renderer2D.ColorUtil.replAlpha(
+               Renderer2D.ColorUtil.getBackGroundColor(1, 1),
+               (int)(220.0F * GuiScreen.alphaPC.get())
+            );
+            renderer2D.circle(avatarCenterX, avatarCenterY, avatarSize * 0.5F, 0.0F, 1.0F, avatarBackground);
+            if (discordAvatar > 0) {
+               renderer2D.drawRgbaTextureWithUVRounded(discordAvatar, avatarX, avatarY, avatarSize, avatarSize, 0.0F, 0.0F, 1.0F, 1.0F, radiusUser);
+            } else {
+               MinecraftTheme.drawAvatar(renderer2D, avatarX + 1.0F, avatarY + 1.0F, avatarSize - 2.0F, radiusUser);
+            }
+         }
+         String userName = resolveUserName();
+         renderer2D.text(FontRegistry.INTER_MEDIUM, GuiScreen.x + 34.925F, GuiScreen.y + 213.355F + 7.0F, 14.0F, userName, textColor);
+         renderer2D.text(FontRegistry.INTER_MEDIUM, GuiScreen.x + 34.925F, GuiScreen.y + 220.89F + 7.0F, 13.0F, "Free", textTwoColor40);
+         if (userName != null && userName.equalsIgnoreCase("mooncode2")) {
+            float checkNameX = renderer2D.measureText(FontRegistry.INTER_MEDIUM, userName, 14.0F).width;
+            if (vanillaStyle) {
+               MinecraftTheme.drawIcon(renderer2D, MinecraftTheme.IconType.CROWN, GuiScreen.x + checkNameX + 39.0F, GuiScreen.y + 214.99F + 1.0F, 12.0F, MinecraftTheme.GOLD);
+            } else {
+               renderer2D.shadow(GuiScreen.x + checkNameX + 39.0F + 3.0F, GuiScreen.y + 214.99F + 1.5F + 1.0F, 0.1F, 0.1F, 6.0F, 4.1666665F, 0.1F, koronaColors.getRGB());
+               renderer2D.text(
+                  FontRegistry.ICONS,
+                  GuiScreen.x + checkNameX + 39.0F,
+                  GuiScreen.y + 214.99F - 0.5F + 5.0F + 1.0F,
+                  12.0F,
+                  "i",
+                  Renderer2D.ColorUtil.rgba(255, 205, 0, (int)(255.0F * GuiScreen.alphaPC.get()))
+               );
+            }
+         }
+     }
+
+     private static String resolveUserName() {
+         try {
+            if (mc != null && mc.getSession() != null) {
+               String name = mc.getSession().getUsername();
+               if (name != null && !name.isBlank()) {
+                  return name;
+               }
+            }
+         } catch (Throwable ignored) {
+         }
+
+         return "Player";
+     }
+
+    private static MinecraftTheme.IconType categoryIcon(Category category) {
+        switch (category) {
+            case Combat:
+                return MinecraftTheme.IconType.GEAR;
+            case Movement:
+                return MinecraftTheme.IconType.ARROW_DOWN;
+            case Visuals:
+                return MinecraftTheme.IconType.EYE;
+            case Player:
+                return MinecraftTheme.IconType.CROWN;
+            case Utils:
+                return MinecraftTheme.IconType.PEN;
+            case Prime:
+                return MinecraftTheme.IconType.SEARCH;
+            case Cosmetics:
+                return MinecraftTheme.IconType.CROWN;
+            case Misc:
+            default:
+                return MinecraftTheme.IconType.MAP;
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "simplevisuals:stick_diamond",
+  "item": "minecraft:stick",
+  "name": "JsonTest",
+  "model": "minecraft:diamond",
+  "weight": 10.0
+}

@@ -1,0 +1,29 @@
+{
+  "required": true,
+  "package": "com.simplevisuals.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AnvilScreenHandlerMixin",
+    "EntityAccessor",
+    "client.ResourcePackManagerAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "client.AnvilScreenMixin",
+    "client.ChatHudMixin",
+    "client.ClientPlayNetworkHandlerMixin",
+    "client.FilledMapItemMixin",
+    "client.HeldItemTooltipMixin",
+    "client.InGameScreenHudMixin",
+    "client.InventoryEffectBarMixin",
+    "client.ItemModelManagerMixin",
+    "client.LivingEntityHealthMixin",
+    "client.LocatorBarMixin",
+    "client.StatusEffectBarMixin"
+  ]
+}

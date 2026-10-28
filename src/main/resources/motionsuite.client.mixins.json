@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "dev.r3vy.motionsuite.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"plugin": "dev.r3vy.motionsuite.MbMixinPlugin",
+	"client": [
+		"CameraMixin",
+		"GameRendererMixin",
+		"PostPassMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

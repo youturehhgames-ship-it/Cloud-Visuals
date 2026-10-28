@@ -1,0 +1,10 @@
+{
+  "item": "minecraft:stick",
+  "name": "JsonTest",
+  "model": "minecraft:emerald",
+  "tags": [
+    "grün",
+    "edelstein",
+    "test"
+  ]
+}

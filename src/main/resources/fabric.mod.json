@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "cloudvisuals",
+  "version": "${version}",
+  "name": "CloudVisuals",
+  "description": "Merged client-side visuals mod: ZeroVisuals core + SimpleVisuals HUD features + Motionsuite motion blur. Fabric 1.21.11.",
+  "authors": [
+    "mooncode2 (ZeroVisuals)",
+    "Ouzzi (SimpleVisuals)",
+    "0r3vy (Motionsuite)",
+    "merge: CloudVisuals"
+  ],
+  "contact": {
+    "sources": "https://github.com/mooncode2/ZeroVisual"
+  },
+  "license": "GPL-3.0-only",
+  "icon": "assets/zero/zero.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "com.simplevisuals.Simplevisuals"
+    ],
+    "client": [
+      "ru.zero.Zero",
+      "com.simplevisuals.SimplevisualsClient",
+      "dev.r3vy.motionsuite.MbClient"
+    ],
+    "modmenu": [
+      "com.simplevisuals.compat.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "zero.mixins.json",
+    "simplevisuals.mixins.json",
+    "motionsuite.client.mixins.json"
+  ],
+  "accessWidener": "zero.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "recommends": {
+    "cloth-config": "*",
+    "modmenu": "*"
+  }
+}
