@@ -32,6 +32,7 @@ public class GuiManager {
          }
 
          if (!this.file.exists()) {
+            if (this.file.getParentFile() != null) this.file.getParentFile().mkdirs();
             this.file.createNewFile();
             this.saveSettings();
          } else {

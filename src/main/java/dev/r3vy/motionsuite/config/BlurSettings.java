@@ -3,7 +3,7 @@ package dev.r3vy.motionsuite.config;
 import com.google.gson.JsonObject;
 
 public final class BlurSettings {
-    private static final int DEFAULT_AMOUNT = 50;
+    private static final int DEFAULT_AMOUNT = 0;
     private static final int DEFAULT_GUARD_CUT = 60;
     private static final int MAX_PERCENT = 100;
     private static final int MAX_BLEND_PERCENT = 99;

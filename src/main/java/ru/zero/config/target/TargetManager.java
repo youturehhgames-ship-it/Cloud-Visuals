@@ -22,6 +22,7 @@ public class TargetManager {
    public static void init() {
       try {
          if (!file.exists()) {
+            if (file.getParentFile() != null) file.getParentFile().mkdirs();
             file.createNewFile();
          } else {
             readTargets();

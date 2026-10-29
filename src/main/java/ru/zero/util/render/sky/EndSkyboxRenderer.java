@@ -42,7 +42,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL32;
 import ru.zero.mixin.GameRendererAccessor;
-import ru.zero.mixin.GlGpuBufferAccessor;
 import ru.zero.module.impl.visuals.SkyBox;
 import ru.zero.util.render.backends.gl.ResourceUtils;
 
@@ -287,7 +286,7 @@ public final class EndSkyboxRenderer {
       }
 
       this.gpuDebugLogged = true;
-      int id = ((GlGpuBufferAccessor) (Object) this.uniformBuffer).zero$getId();
+      int id = 0; // GlGpuBufferAccessor not in published source; debug readback disabled
       FloatBuffer data = BufferUtils.createFloatBuffer(UNIFORM_FLOATS);
       GL15.glBindBuffer(GL32.GL_UNIFORM_BUFFER, id);
       int bindError = GL11.glGetError();

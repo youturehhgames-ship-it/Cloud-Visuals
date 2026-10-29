@@ -34,6 +34,7 @@ public final class Config implements ConfigUpdater {
       this.file = new File(ConfigManager.configDirectory, name + ".json");
       if (!this.file.exists()) {
          try {
+            if (this.file.getParentFile() != null) this.file.getParentFile().mkdirs();
             this.file.createNewFile();
          } catch (Exception var3) {
          }

@@ -20,7 +20,6 @@ import ru.zero.module.impl.visuals.HUD.HudEditor;
 import ru.zero.module.impl.visuals.HUD.InformationHUD;
 import ru.zero.module.impl.visuals.HUD.KeyBindHUD;
 import ru.zero.module.impl.visuals.HUD.BossBarHUD;
-import ru.zero.module.impl.visuals.HUD.MusicHUD;
 import ru.zero.module.impl.visuals.HUD.PotionsHUD;
 import ru.zero.module.impl.visuals.HUD.ScoreboardHUD;
 import ru.zero.module.impl.visuals.HUD.TargetHUD;
@@ -103,10 +102,6 @@ public class Hud extends Module {
                HudEditor.renderElement("notifications", r2, () -> this.renderNotifications(r2));
             }
 
-             if (element.get("Музыка")) {
-                MusicHUD.setLyricsEnabled(islandOptions.get("Текст песни"));
-                HudEditor.renderElement("island", r2, () -> MusicHUD.render(r2));
-             }
 
             if (element.get("Ватер марк")) {
                HudEditor.renderElement("watermark", r2, () -> WaterMark.waterMark(r2));
@@ -148,7 +143,6 @@ public class Hud extends Module {
 
    @EventInit
    public void onMouseButton(MouseButtonEvent event) {
-       MusicHUD.onMouseButton(event);
       HudEditor.onMouseButton(event);
    }
 

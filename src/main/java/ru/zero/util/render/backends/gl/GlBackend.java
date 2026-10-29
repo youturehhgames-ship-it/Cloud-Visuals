@@ -155,7 +155,7 @@ public final class GlBackend implements RenderBackend {
             this.blurCaptureScaleX = 0.4F;
             this.blurCaptureScaleY = 0.4F;
          }
-         if (this.debugOutputSupported) {
+         if (this.debugOutputSupported && Boolean.getBoolean("cloudvisuals.gldebug")) {
             this.installDebugCallback(caps);
          }
       } else {
