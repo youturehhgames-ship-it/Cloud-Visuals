@@ -136,6 +136,7 @@ public class Hud extends Module {
                HudEditor.renderElement("keybinds", r2, () -> KeyBindHUD.keybind(r2));
             }
 
+            DraggableManager.getInstance().renderEditorOverlay();
             HudEditor.renderPopup(r2);
          }
       }

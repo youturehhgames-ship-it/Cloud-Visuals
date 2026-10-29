@@ -22,8 +22,24 @@ public class NoRender extends Module {
    public static final BooleanSetting fire = new BooleanSetting("Огонь", true);
    public static final BooleanSetting fog = new BooleanSetting("Туман", true);
 
+   // CloudVisuals (ideas from LiquidBounce AntiBlind / NoHurtCam / NoBob): purely cosmetic overlays only
+   public static final BooleanSetting inWall = new BooleanSetting("Блок в лицо", false);
+   public static final BooleanSetting pumpkin = new BooleanSetting("Тыква", false);
+   public static final BooleanSetting portal = new BooleanSetting("Портал", false);
+   public static final BooleanSetting spyglass = new BooleanSetting("Подзорная труба", false);
+   public static final BooleanSetting hurtCam = new BooleanSetting("Тряска от урона", false);
+   public static final BooleanSetting bob = new BooleanSetting("Покачивание", false);
+
+   public static boolean hides(BooleanSetting option) {
+      if (ru.zero.Zero.get == null || ru.zero.Zero.get.manager == null) {
+         return false;
+      }
+      NoRender m = ru.zero.Zero.get.manager.get(NoRender.class);
+      return m != null && m.enable && option.get();
+   }
+
    public NoRender() {
-      this.addSettings(new Setting[]{fire, fog});
+      this.addSettings(new Setting[]{fire, fog, inWall, pumpkin, portal, spyglass, hurtCam, bob});
    }
 
    @EventInit

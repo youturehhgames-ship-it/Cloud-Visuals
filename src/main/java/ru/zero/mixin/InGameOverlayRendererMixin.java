@@ -47,7 +47,7 @@ public class InGameOverlayRendererMixin {
 
    @Inject(method = "renderInWallOverlay", at = @At("HEAD"), cancellable = true)
    private static void zero$cancelInWallOverlay(Sprite sprite, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
-      if (NoFluid.shouldDisableWaterOverlay() || NoFluid.shouldDisableLavaOverlay()) {
+      if (NoRender.hides(NoRender.inWall) || NoFluid.shouldDisableWaterOverlay() || NoFluid.shouldDisableLavaOverlay()) {
          ci.cancel();
       }
    }

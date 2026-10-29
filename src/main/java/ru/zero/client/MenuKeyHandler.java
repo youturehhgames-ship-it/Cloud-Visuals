@@ -39,7 +39,7 @@ public final class MenuKeyHandler {
             return;
          }
 
-         client.setScreen(gui);
+         client.setScreen(ru.zero.ui.cloud.CloudMenus.choose(gui));
          if (client.mouse != null) {
             client.mouse.unlockCursor();
          }

@@ -158,7 +158,7 @@ public class Zero implements ClientModInitializer {
       }
 
       this.guiClient = new GuiClient();
-      this.visualLinkingClient = new VisualLinkingClient();
+      this.visualLinkingClient = null; // CloudVisuals: no phone-home to the ZeroVisuals author's server
       LunarCompat.applyStartupTweaks();
       if (LunarCompat.isLunarClient() && this.manager != null) {
          Hud hud = this.manager.get(Hud.class);
@@ -168,7 +168,7 @@ public class Zero implements ClientModInitializer {
       }
       RenderHandler.register();
       EventManager.register(this);
-      EventManager.register(this.visualLinkingClient);
+      // CloudVisuals: VisualLinkingClient removed
       EventManager.register(ru.zero.cosmetic.render.CosmeticWorldRenderer.getInstance()); 
       ru.zero.cosmetic.CosmeticState.load();
       ru.zero.module.impl.visuals.Cosmetics cosmeticsModule = this.manager != null

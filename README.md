@@ -27,9 +27,19 @@ All of the following are modules in the Right Shift menu:
 | **[SimpleVisuals](https://github.com/Ouzzi/simplevisuals)** | Player Locator, Chat Heads, Effect Bars, Elytra Pitch, Speed Lines, Pickup Notifier, Damage Numbers, Biome Info, Item Tooltips, Map Tooltips, Renamed Textures, Death Coords, Anvil Colors |
 | **[Motionsuite](https://github.com/0r3vy/Motionsuite)** | Motion Blur (frame-rate independent, capped at a safe strength) and Smooth Camera |
 
+Ideas ported from **[LiquidBounce](https://github.com/CCBlueX/LiquidBounce)** (visual features only, rewritten for this codebase):
+
+- **No Render** options: block-in-face, pumpkin, portal and spyglass overlays, hurt-cam shake, view bobbing
+- **No Swing** (hides only your own swing animation), **Static FOV**, **Rear View** (hold a key for a third-person view)
+- **HUD editor** (open chat and drag elements): 10px grid, magnetic snapping with guide lines, 3×3 anchor zones that keep elements in place when the window is resized, live coordinates; hold **Shift** to move freely
+
+**Menu styles** (`Utils → Menu Style`): the classic **Zero** menu, a **Cheat Menu** with one draggable panel per category, or a **GTA**-style radial wheel.
+
 Changes made during the merge:
 
 - One menu for everything: SimpleVisuals and Motionsuite settings live in the Right Shift GUI instead of separate screens and chat commands.
+- Privacy: the upstream client sent your nickname and server address to the ZeroVisuals author's server; that request is removed.
+- Cosmetics fixed (they were drawn far away from the player because the camera offset was applied twice).
 - Removed: kill aura and duplicated features, Motionsuite's VulkanMod path (the OpenGL motion blur remains), and classes the upstream ZeroVisuals source never published (music/lyrics HUD and a few UI helpers).
 - Fixed: motion blur strength no longer depends on FPS, ghosting from old frames is cleared faster, an invalid OpenGL call that flooded the log every frame, and a synchronous GL debug callback that tanked FPS.
 
@@ -65,4 +75,4 @@ The jar is written to `build\libs\cloudvisuals-<version>.jar`. Use the one **wit
 
 ## Credits
 
-The original features were written by **mooncode2** (ZeroVisuals), **Ouzzi** (SimpleVisuals) and **0r3vy** (Motionsuite). CloudVisuals merges, fixes and extends their work.
+The original features were written by **mooncode2** (ZeroVisuals), **Ouzzi** (SimpleVisuals) and **0r3vy** (Motionsuite). Several visual features and the HUD editor behaviour are based on **[LiquidBounce](https://github.com/CCBlueX/LiquidBounce)** by CCBlueX (GPL-3.0). CloudVisuals merges, fixes and extends their work.

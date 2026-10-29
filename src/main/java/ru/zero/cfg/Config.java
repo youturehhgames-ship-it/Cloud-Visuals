@@ -66,6 +66,12 @@ public final class Config implements ConfigUpdater {
          JsonObject posObject = new JsonObject();
          posObject.addProperty("x", entry.getValue().x());
          posObject.addProperty("y", entry.getValue().y());
+         if (entry.getValue().ax() != 0.0F) {
+            posObject.addProperty("ax", entry.getValue().ax());
+         }
+         if (entry.getValue().ay() != 0.0F) {
+            posObject.addProperty("ay", entry.getValue().ay());
+         }
          draggablePositions.add(entry.getKey(), posObject);
       }
 
@@ -116,7 +122,9 @@ public final class Config implements ConfigUpdater {
                float y = posObject.get("y").getAsFloat();
 
                try {
-                  positions.put(key, new DraggableManager.NormalizedPosition(x, y));
+                  float ax = posObject.has("ax") ? posObject.get("ax").getAsFloat() : 0.0F;
+                  float ay = posObject.has("ay") ? posObject.get("ay").getAsFloat() : 0.0F;
+                  positions.put(key, new DraggableManager.NormalizedPosition(x, y, ax, ay));
                } catch (Exception var10) {
                   System.out.println("[Config] Failed to load position for: " + key);
                }

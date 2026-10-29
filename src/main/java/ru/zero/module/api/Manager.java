@@ -65,6 +65,10 @@ import ru.zero.module.impl.cloud.DeathCoords;
 import ru.zero.module.impl.cloud.AnvilColors;
 import ru.zero.module.impl.cloud.MotionBlur;
 import ru.zero.module.impl.cloud.SmoothCamera;
+import ru.zero.module.impl.cloud.NoSwing;
+import ru.zero.module.impl.cloud.StaticFov;
+import ru.zero.module.impl.cloud.RearView;
+import ru.zero.module.impl.cloud.MenuStyle;
 import ru.zero.module.impl.visuals.FakePlayer;
 import ru.zero.module.impl.visuals.TotemTracker;
 import ru.zero.module.impl.visuals.CustomHand;
@@ -145,6 +149,11 @@ public class Manager {
       this.module.add(new AnvilColors());
       this.module.add(new MotionBlur());
       this.module.add(new SmoothCamera());
+      // CloudVisuals: ported ideas from LiquidBounce (visual only)
+      this.module.add(new NoSwing());
+      this.module.add(new StaticFov());
+      this.module.add(new RearView());
+      this.module.add(new MenuStyle());
       this.rebuildCache();
    }
 

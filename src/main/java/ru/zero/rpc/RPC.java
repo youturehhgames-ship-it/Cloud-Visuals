@@ -16,11 +16,11 @@ import ru.zero.util.other.IMinecraft;
 @Environment(EnvType.CLIENT)
 public class RPC implements IMinecraft {
    private static final String APPLICATION_ID = "1522909252971135156";
-   private static final String BUILD_TEXT = "Build 3.0";
-   private static final String MODRINTH_LABEL = "Modrinth";
-   private static final String MODRINTH_URL = "https://modrinth.com/mod/zerovisuals";
-   private static final String TELEGRAM_KEY = "Telegram";
-   private static final String TELEGRAM_URL = "https://t.me/zerovisualsoff";
+   private static final String BUILD_TEXT = "Beta 1.0.0";
+   private static final String MODRINTH_LABEL = "GitHub";
+   private static final String MODRINTH_URL = "https://github.com/youturehhgames-ship-it/Cloud-Visuals";
+   private static final String TELEGRAM_KEY = "Download";
+   private static final String TELEGRAM_URL = "https://github.com/youturehhgames-ship-it/Cloud-Visuals/releases";
    private static final String LARGE_IMAGE_KEY = "h";
    private static final long RETRY_DELAY_MS = 15_000L;
    private static final long REFRESH_INTERVAL_MS = 20_000L;

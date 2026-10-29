@@ -116,9 +116,8 @@ public final class CosmeticWorldRenderer {
       } else if (slot == CosmeticSlot.BACKPACKS) {
          baseY = 1.0F + cosmetic.offsetY;
       } else {
-         // CloudVisuals: registry offsets are in blocks (same as backpacks), not pixels
-         baseY = 1.15F + cosmetic.offsetY;
-         baseZ = cosmetic.offsetZ;
+         baseY = 1.15F + cosmetic.offsetY / 16.0F;
+         baseZ = cosmetic.offsetZ / 16.0F;
       }
 
       float scale = cosmetic.scale;
@@ -140,7 +139,8 @@ public final class CosmeticWorldRenderer {
             float lz = local[2];
             float wx = lx * cos - lz * sin;
             float wz = lx * sin + lz * cos;
-            points[i] = new Vec3d(x - camera.x + wx, y - camera.y + baseY + ly, z - camera.z + wz + baseZ);
+            // CloudVisuals: the emitter subtracts the camera position itself, pass absolute world coords
+            points[i] = new Vec3d(x + wx, y + baseY + ly, z + wz + baseZ);
             bx0 = Math.min(bx0, wx); bx1 = Math.max(bx1, wx);
             by0 = Math.min(by0, baseY + ly); by1 = Math.max(by1, baseY + ly);
             bz0 = Math.min(bz0, wz + baseZ); bz1 = Math.max(bz1, wz + baseZ);
@@ -153,7 +153,7 @@ public final class CosmeticWorldRenderer {
                u(quad, model, 3), v(quad, model, 3),
                0xFFFFFFFF, true);
       }
-      logOnce(String.format(java.util.Locale.ROOT, "bounds %s rel. feet (blocks): x[%.2f..%.2f] y[%.2f..%.2f] z[%.2f..%.2f], scale %.2f, camera dist %.2f", cosmetic.key, bx0, bx1, by0, by1, bz0, bz1, scale, Math.sqrt(Math.pow(x - camera.x, 2) + Math.pow(y - camera.y, 2) + Math.pow(z - camera.z, 2))));
+      if (LOGGED.add("bounds:" + cosmetic.key)) logOnce(String.format(java.util.Locale.ROOT, "bounds %s rel. feet (blocks): x[%.2f..%.2f] y[%.2f..%.2f] z[%.2f..%.2f], scale %.2f, camera dist %.2f", cosmetic.key, bx0, bx1, by0, by1, bz0, bz1, scale, Math.sqrt(Math.pow(x - camera.x, 2) + Math.pow(y - camera.y, 2) + Math.pow(z - camera.z, 2))));
    }
 
    private static float[] rotateZYX(float x, float y, float z, float rx, float ry, float rz) {
