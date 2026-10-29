@@ -27,7 +27,10 @@ void main() {
 
     vec3 delta = current - previous;
     vec3 stalled = 1.0 - step(0.5 * LSB, abs(blended - previous));
-    vec3 nudged = previous + sign(delta) * min(abs(delta), vec3(LSB));
+    // CloudVisuals: clear 8-bit quantization residue faster (>=10% per frame)
+    // so a faint copy of an old frame cannot linger for seconds.
+    vec3 stepSize = max(vec3(LSB), abs(delta) * 0.1);
+    vec3 nudged = previous + sign(delta) * min(abs(delta), stepSize);
 
     fragColor = vec4(mix(blended, nudged, stalled), 1.0);
 }

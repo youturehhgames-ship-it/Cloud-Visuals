@@ -42,13 +42,7 @@ public class GuiMouseClicked extends GuiScreen {
              return true;
           }
 
-          float modrinthButtonX = GuiScreen.x + GuiRenderUpPanel.MODRINTH_BUTTON_X_OFFSET;
-          float modrinthButtonY = GuiScreen.y + GuiRenderUpPanel.MODRINTH_BUTTON_Y_OFFSET;
-          if (pButton == 0 && GuiRenderMain.isHovered(mouseX, mouseY, modrinthButtonX, modrinthButtonY, GuiRenderUpPanel.MODRINTH_BUTTON_SIZE, GuiRenderUpPanel.MODRINTH_BUTTON_SIZE)) {
-             GuiScreen.showClientSettingsPopup = false;
-             UrlOpener.open(GuiRenderUpPanel.MODRINTH_URL);
-             return true;
-          }
+          // CloudVisuals: ZeroVisuals Modrinth button removed
 
 
          if (GuiScreen.serverMapOpen) {

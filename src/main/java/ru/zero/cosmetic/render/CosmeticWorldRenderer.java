@@ -33,6 +33,15 @@ public final class CosmeticWorldRenderer {
    private CosmeticWorldRenderer() {
    }
 
+   // CloudVisuals diagnostics: each distinct message is printed once.
+   private static final java.util.Set<String> LOGGED = new java.util.HashSet<>();
+
+   private static void logOnce(String message) {
+      if (LOGGED.add(message)) {
+         System.out.println("[CloudVisuals][Cosmetics] " + message);
+      }
+   }
+
    public static CosmeticWorldRenderer getInstance() {
       return INSTANCE;
    }
@@ -43,10 +52,13 @@ public final class CosmeticWorldRenderer {
       if (client.world == null || client.player == null) {
          return;
       }
+      logOnce("world render event received");
       if (!CosmeticState.isEnabled()) {
+         logOnce("skipped: cosmetics disabled (Cosmetics module off)");
          return;
       }
       if (client.options.getPerspective() == Perspective.FIRST_PERSON) {
+         logOnce("skipped: first person (wings/backpacks/hats render only in F5)");
          return;
       }
 
@@ -58,7 +70,10 @@ public final class CosmeticWorldRenderer {
       for (CosmeticSlot slot : new CosmeticSlot[] { CosmeticSlot.WINGS, CosmeticSlot.BACKPACKS, CosmeticSlot.HATS }) {
          Cosmetic cosmetic = CosmeticState.equipped(slot);
          if (cosmetic != null) {
+            logOnce("equipped " + slot + " = " + cosmetic.key + " (texture " + cosmetic.texture + ")");
             render(renderer, client, player, cosmetic, slot, partial, camera);
+         } else {
+            logOnce("nothing equipped in " + slot);
          }
       }
    }
@@ -67,19 +82,23 @@ public final class CosmeticWorldRenderer {
          CosmeticSlot slot, float partial, Vec3d camera) {
       BedrockModel model = CosmeticRenderer.model(cosmetic);
       if (model == null) {
+         logOnce("FAIL " + cosmetic.key + ": model could not be loaded");
          return;
       }
 
       Identifier texture = textureId(cosmetic);
       if (texture == null) {
+         logOnce("FAIL " + cosmetic.key + ": no texture");
          return;
       }
 
       float time = (player.age + partial) / 20.0F;
       List<ModelQuad> quads = CosmeticRenderer.flattened(cosmetic, time);
       if (quads.isEmpty()) {
+         logOnce("FAIL " + cosmetic.key + ": model has no quads");
          return;
       }
+      logOnce("drawing " + cosmetic.key + ": " + quads.size() + " quads, texture " + texture);
 
       double x = player.lastRenderX + (player.getX() - player.lastRenderX) * partial;
       double y = player.lastRenderY + (player.getY() - player.lastRenderY) * partial;
@@ -97,8 +116,9 @@ public final class CosmeticWorldRenderer {
       } else if (slot == CosmeticSlot.BACKPACKS) {
          baseY = 1.0F + cosmetic.offsetY;
       } else {
-         baseY = 1.15F + cosmetic.offsetY / 16.0F;
-         baseZ = cosmetic.offsetZ / 16.0F;
+         // CloudVisuals: registry offsets are in blocks (same as backpacks), not pixels
+         baseY = 1.15F + cosmetic.offsetY;
+         baseZ = cosmetic.offsetZ;
       }
 
       float scale = cosmetic.scale;
@@ -109,6 +129,7 @@ public final class CosmeticWorldRenderer {
       float rotY = (float) Math.toRadians(cosmetic.rotationY);
       float rotZ = (float) Math.toRadians(cosmetic.rotationZ);
 
+      double bx0 = 1e9, by0 = 1e9, bz0 = 1e9, bx1 = -1e9, by1 = -1e9, bz1 = -1e9;
       for (ModelQuad quad : quads) {
          Vec3d[] points = new Vec3d[4];
          for (int i = 0; i < 4; i++) {
@@ -120,6 +141,9 @@ public final class CosmeticWorldRenderer {
             float wx = lx * cos - lz * sin;
             float wz = lx * sin + lz * cos;
             points[i] = new Vec3d(x - camera.x + wx, y - camera.y + baseY + ly, z - camera.z + wz + baseZ);
+            bx0 = Math.min(bx0, wx); bx1 = Math.max(bx1, wx);
+            by0 = Math.min(by0, baseY + ly); by1 = Math.max(by1, baseY + ly);
+            bz0 = Math.min(bz0, wz + baseZ); bz1 = Math.max(bz1, wz + baseZ);
          }
 
          renderer.drawTexturedQuad(texture, points[0], points[1], points[2], points[3],
@@ -129,6 +153,7 @@ public final class CosmeticWorldRenderer {
                u(quad, model, 3), v(quad, model, 3),
                0xFFFFFFFF, true);
       }
+      logOnce(String.format(java.util.Locale.ROOT, "bounds %s rel. feet (blocks): x[%.2f..%.2f] y[%.2f..%.2f] z[%.2f..%.2f], scale %.2f, camera dist %.2f", cosmetic.key, bx0, bx1, by0, by1, bz0, bz1, scale, Math.sqrt(Math.pow(x - camera.x, 2) + Math.pow(y - camera.y, 2) + Math.pow(z - camera.z, 2))));
    }
 
    private static float[] rotateZYX(float x, float y, float z, float rx, float ry, float rz) {

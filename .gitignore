@@ -17,14 +17,3 @@ crash-reports/
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Dev
-./Funtime
-README.md
-VERSIONS.md
-
-*.rar
-
-Delta/
-Nursultan/
-evovis-client/

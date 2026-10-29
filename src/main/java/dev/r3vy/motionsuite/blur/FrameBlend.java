@@ -47,6 +47,13 @@ public final class FrameBlend {
         pendingSeed = true;
     }
 
+    // CloudVisuals: frame-rate independent blending.
+    // The configured strength is the per-frame blend at a 60 FPS reference;
+    // for any real frame time dt the factor becomes base^(dt * 60), so the trail
+    // lasts the same wall-clock time at 13 FPS and at 240 FPS. Long hitches drop
+    // the history entirely instead of leaving a frozen ghost of an old frame.
+    private static final double REFERENCE_FPS = 60.0;
+
     public static float next() {
         long now = System.nanoTime();
         if (pendingSeed) {
@@ -58,22 +65,19 @@ public final class FrameBlend {
         last = now;
 
         float base = guardedBase();
-        if (!Settings.BLUR.adaptive() || base <= 0.0f) {
+        if (base <= 0.0f) {
+            return 0.0f;
+        }
+        if (!Settings.BLUR.adaptive()) {
             return quantize(base);
         }
-        if (slow == 0.0) {
-            learn(dt);
+        if (dt >= MAX_DT) {
+            return 0.0f;
+        }
+        if (dt <= 0.0) {
             return quantize(base);
         }
-
-        double ratio = measureRatio(dt);
-        if (ratio == RELEARNING) {
-            return quantize(base);
-        }
-        smoothedRatio += (ratio - smoothedRatio) * RATIO_SMOOTHING;
-        double exponent = Math.max(MIN_RATIO, Math.min(MAX_RATIO, smoothedRatio));
-        float scaled = (float) Math.pow(base, exponent);
-        return quantize(Math.abs(scaled - base) < DEADBAND ? base : scaled);
+        return quantize((float) Math.pow(base, dt * REFERENCE_FPS));
     }
 
     private static float guardedBase() {

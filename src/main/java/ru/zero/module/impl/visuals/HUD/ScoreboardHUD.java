@@ -33,7 +33,7 @@ public class ScoreboardHUD {
    private static final float RADIUS = 10.0F;
    private static final float FONT_SIZE = 20.0F;
    private static final float TITLE_SIZE = 22.0F;
-   private static final String PREVIEW_TITLE = "Zero";
+   private static final String PREVIEW_TITLE = "Cloud";
    private static final String PREVIEW_BODY = "Steve 1\nAlex 2\nEnderman 3";
    private static final Animation openAnimation = new Animation();
    private static boolean lastVisible = false;

@@ -209,7 +209,7 @@ public final class LunarOverlayRender {
       int tempFbo = 0;
       int savedDrawFbo = GL11.glGetInteger(36006);
       int savedReadFbo = GL11.glGetInteger(36010);
-      int savedFbo = GL11.glGetInteger(36160);
+      int savedFbo = GL11.glGetInteger(36006);
       if (mainFramebuffer != null) {
          if (mainFramebuffer.getColorAttachment() instanceof GlTexture glColor) {
             int mainFramebufferTextureId = glColor.getGlId();

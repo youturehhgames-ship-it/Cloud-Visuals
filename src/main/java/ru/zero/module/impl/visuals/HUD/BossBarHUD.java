@@ -31,7 +31,7 @@ public class BossBarHUD {
    private static final float NORMAL_RADIUS = 5.0F;
    private static final int DIVISIONS = 10;
    private static final int MAX_BARS = 6;
-   private static final String PREVIEW_NAME = "Zero";
+   private static final String PREVIEW_NAME = "Cloud";
    private static final float PREVIEW_PERCENT = 1.0F;
    private static final List<BossBar> barBuffer = new ArrayList<>();
 

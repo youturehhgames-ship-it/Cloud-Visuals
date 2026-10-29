@@ -23,10 +23,8 @@
     "client": [
       "ru.zero.Zero",
       "com.simplevisuals.SimplevisualsClient",
-      "dev.r3vy.motionsuite.MbClient"
-    ],
-    "modmenu": [
-      "com.simplevisuals.compat.ModMenuIntegration"
+      "dev.r3vy.motionsuite.MbClient",
+      "ru.zero.module.impl.cloud.CloudBridge"
     ]
   },
   "mixins": [

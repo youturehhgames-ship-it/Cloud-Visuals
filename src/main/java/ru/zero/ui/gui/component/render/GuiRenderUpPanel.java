@@ -76,7 +76,7 @@ public class GuiRenderUpPanel extends GuiScreen {
          1.0F,
          Renderer2D.ColorUtil.replAlpha(Renderer2D.ColorUtil.getBackGroundColor(1, 1), (int)(210.0F * mainAlpha))
       );
-      renderer2D.text(FontRegistry.INTER_MEDIUM, GuiScreen.x + 28.17F, GuiScreen.y + 12.595F + 7.0F, 14.0F, "Zero", textColor);
+      renderer2D.text(FontRegistry.INTER_MEDIUM, GuiScreen.x + 28.17F, GuiScreen.y + 12.595F + 7.0F, 14.0F, "Cloud", textColor);
       renderer2D.text(FontRegistry.INTER_MEDIUM, GuiScreen.x + 66.99F, GuiScreen.y + 12.595F + 7.0F, 14.0F, "1.21.11", textTwoColor40);
        if (ru.zero.util.render.glass.LiquidGlassRenderer.isEnabled()) {
            ru.zero.util.render.glass.LiquidGlassRenderer.drawGlassPanel(renderer2D, GuiScreen.x + 111.885F, GuiScreen.y + 6.185F, 124.04F, 21.325F, radiusBox, outlineColor, backGroundThreeColor, mainAlpha);
@@ -111,23 +111,7 @@ public class GuiRenderUpPanel extends GuiScreen {
       }
 
        GuiServerMapPanel.renderMapButton(renderer2D, mainAlpha);
-       float modrinthX = GuiScreen.x + MODRINTH_BUTTON_X_OFFSET;
-       float modrinthY = GuiScreen.y + MODRINTH_BUTTON_Y_OFFSET;
-        if (ru.zero.util.render.glass.LiquidGlassRenderer.isEnabled()) {
-            ru.zero.util.render.glass.LiquidGlassRenderer.drawGlassPanel(renderer2D, modrinthX, modrinthY, MODRINTH_BUTTON_SIZE, MODRINTH_BUTTON_SIZE, radiusBox, outlineColor, backGroundThreeColor, mainAlpha);
-        } else {
-            renderer2D.rectOutline(modrinthX, modrinthY, MODRINTH_BUTTON_SIZE, MODRINTH_BUTTON_SIZE, radiusBox, outlineColor, vanillaStyle ? 1.0F : 0.1F);
-            renderer2D.rect(modrinthX, modrinthY, MODRINTH_BUTTON_SIZE, MODRINTH_BUTTON_SIZE, radiusBox, backGroundThreeColor);
-        }
-        if (modrinthIconId < 0) {
-           modrinthIconId = SvgIconLoader.load("assets/zero/modrinth.svg", 96);
-        }
-        if (modrinthIconId > 0) {
-           renderer2D.drawRgbaTexture(modrinthIconId, modrinthX + 2.6625F, modrinthY + 2.6625F, 16.0F, 16.0F, mainColor);
-        } else {
-           float textWidth = renderer2D.measureText(FontRegistry.INTER_MEDIUM, "M", 14.0F).width;
-           renderer2D.text(FontRegistry.INTER_MEDIUM, modrinthX + MODRINTH_BUTTON_SIZE * 0.5F - textWidth * 0.5F, modrinthY + 6.5F + 7.0F, 14.0F, "M", mainColor);
-        }
+       // CloudVisuals: ZeroVisuals Modrinth button removed
 
        if (ru.zero.util.render.glass.LiquidGlassRenderer.isEnabled()) {
            ru.zero.util.render.glass.LiquidGlassRenderer.drawGlassPanel(renderer2D, GuiScreen.x + 338.555F, GuiScreen.y + 6.185F, 21.325F, 21.325F, radiusBox, outlineColor, backGroundThreeColor, mainAlpha);

@@ -22,7 +22,7 @@ public class Simplevisuals implements ModInitializer {
         AutoConfig.register(SimplevisualsConfig.class, GsonConfigSerializer::new);
         CONFIG = AutoConfig.getConfigHolder(SimplevisualsConfig.class).getConfig();
 
-        ModCommands.register();
+        // CloudVisuals: configured from the Zero menu, commands disabled
 
     }
 

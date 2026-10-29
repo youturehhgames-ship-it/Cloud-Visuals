@@ -50,6 +50,26 @@ import ru.zero.module.impl.utils.NoDamage;
 import ru.zero.module.impl.utils.Optimizer;
 import ru.zero.module.impl.utils.Zoom;
 import ru.zero.module.impl.utils.MaceHelper;
+import ru.zero.module.impl.cloud.PlayerLocator;
+import ru.zero.module.impl.cloud.ChatHeads;
+import ru.zero.module.impl.cloud.EffectBars;
+import ru.zero.module.impl.cloud.ElytraPitch;
+import ru.zero.module.impl.cloud.SpeedLines;
+import ru.zero.module.impl.cloud.PickupNotifier;
+import ru.zero.module.impl.cloud.DamageNumbers;
+import ru.zero.module.impl.cloud.BiomeInfo;
+import ru.zero.module.impl.cloud.ItemTooltips;
+import ru.zero.module.impl.cloud.MapTooltips;
+import ru.zero.module.impl.cloud.RenamedTextures;
+import ru.zero.module.impl.cloud.DeathCoords;
+import ru.zero.module.impl.cloud.AnvilColors;
+import ru.zero.module.impl.cloud.MotionBlur;
+import ru.zero.module.impl.cloud.SmoothCamera;
+import ru.zero.module.impl.visuals.FakePlayer;
+import ru.zero.module.impl.visuals.TotemTracker;
+import ru.zero.module.impl.visuals.CustomHand;
+import ru.zero.module.impl.visuals.LineGlyphes;
+import ru.zero.module.impl.utils.NoFriendDamage;
 
 /**
  * Список модулей клиента: только Visuals, Misc и Utils. Каталоги combat/movement/player не используются.
@@ -104,6 +124,27 @@ public class Manager {
         this.module.add(new Pets());
        this.module.add(new KillEffect());
       this.module.add(new PrimeParticles());
+      this.module.add(new FakePlayer());
+      this.module.add(new TotemTracker());
+      this.module.add(new CustomHand());
+      this.module.add(new LineGlyphes());
+      this.module.add(new NoFriendDamage());
+      // CloudVisuals: SimpleVisuals + Motionsuite wrappers
+      this.module.add(new PlayerLocator());
+      this.module.add(new ChatHeads());
+      this.module.add(new EffectBars());
+      this.module.add(new ElytraPitch());
+      this.module.add(new SpeedLines());
+      this.module.add(new PickupNotifier());
+      this.module.add(new DamageNumbers());
+      this.module.add(new BiomeInfo());
+      this.module.add(new ItemTooltips());
+      this.module.add(new MapTooltips());
+      this.module.add(new RenamedTextures());
+      this.module.add(new DeathCoords());
+      this.module.add(new AnvilColors());
+      this.module.add(new MotionBlur());
+      this.module.add(new SmoothCamera());
       this.rebuildCache();
    }
 

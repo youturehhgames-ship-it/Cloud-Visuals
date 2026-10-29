@@ -15,7 +15,7 @@ public final class MbClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         Settings.load();
-        Commands.register();
+        // CloudVisuals: configured from the Zero menu, commands disabled
         ClientTickEvents.END_CLIENT_TICK.register(MbClient::onEndTick);
         ClientEntityEvents.ENTITY_LOAD.register((entity, world) -> CameraSmoother.onEntityLoad(entity));
         ClientEntityEvents.ENTITY_UNLOAD.register((entity, world) -> CameraSmoother.onEntityUnload(entity));

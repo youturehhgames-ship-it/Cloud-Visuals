@@ -6,7 +6,7 @@ public final class BlurSettings {
     private static final int DEFAULT_AMOUNT = 0;
     private static final int DEFAULT_GUARD_CUT = 60;
     private static final int MAX_PERCENT = 100;
-    private static final int MAX_BLEND_PERCENT = 99;
+    private static final int MAX_BLEND_PERCENT = 75;
 
     private volatile int amount = DEFAULT_AMOUNT;
     private volatile boolean adaptive;
